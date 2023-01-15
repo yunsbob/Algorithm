@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 
 public class OneZeroEightSevenTwo {
     public static int Factorial(int n){
-        if(n == 1) return 1;
+        if(n <= 1) return 1;
         else return n * Factorial(n-1);
     }
 
