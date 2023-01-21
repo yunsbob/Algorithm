@@ -11,17 +11,17 @@ public class TwoEightThreeNine {
         int result = 0;
 
         while(N > 0){
-            if(N % 5 == 0){
+            if(N % 5 == 0){ // 1순위 5kg 봉지로 나눠질때
                 result += N / 5;
                 N = 0;
             }
-            else{
+            else{ // 2순위 안된다면 3kg 봉지 한개로
                 N -= 3;
                 result++;
             }
         }
 
-        if(N != 0){
+        if(N != 0){ // 정확하게 나눠지지 않았다면
             result = -1;
         }
 
