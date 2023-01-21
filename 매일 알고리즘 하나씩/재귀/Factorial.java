@@ -5,10 +5,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-public class OneOneZeroFiveZero {
-    public static int Factorial(int n){
+public class Factorial {
+    public static int F(int n){
         if(n <= 1) return 1;
-        else return n * Factorial(n-1);
+        else return n * F(n-1);
     }
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,7 +18,7 @@ public class OneOneZeroFiveZero {
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
 
-        bw.write((Factorial(n) / (Factorial(n - k) * Factorial(k))) + "\n");
+        bw.write((F(n) / (F(n - k) * F(k))) + "\n");
         bw.flush();
     }
 }
