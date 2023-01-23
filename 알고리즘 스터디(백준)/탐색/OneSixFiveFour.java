@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 public class OneSixFiveFour {
     static long[] arr;
     static int N;
-    public static long binarySearch(long left, long right, int N) {
+    public static long binarySearch(long left, long right) {
 		long mid = 0;
         long cnt = 0;
 
@@ -18,10 +18,10 @@ public class OneSixFiveFour {
             }
 
 			if(cnt < N) { // 막대기 개수가 부족할 경우 더 자름
-				return binarySearch(left, mid, N);  
+				return binarySearch(left, mid);  
 			}
 			else { // 막대기 개수가 충분할 경우 길이를 늘림
-				return binarySearch(mid + 1, right, N); 
+				return binarySearch(mid + 1, right); 
 			}
 		}
 
@@ -44,7 +44,7 @@ public class OneSixFiveFour {
 			}
         }
 
-        sb.append(binarySearch(0, max + 1, N) - 1); // 나누기 0방지 max + 1
+        sb.append(binarySearch(0, max + 1) - 1); // 나누기 0방지 max + 1
         System.out.println(sb);
     }
 }
