@@ -20,8 +20,7 @@ public class SevenFiveSixEight {
 		for(int i = 0; i < N; i++) {
 			int rank = 1;
 			for(int j = 0; j < N; j++) {
-				if(i == j) continue; // 같을 때는 같은 등수
-				if (arr[i][0] < arr[j][0] && arr[i][1] < arr[j][1]) { // 큰 사람이 존재하면 등수 떨어짐
+				if (arr[i][0] < arr[j][0] && arr[i][1] < arr[j][1]) { // 나보다 키 몸무게 큰 사람이 존재하면 등수 떨어짐
 					rank++;
 				}
 			}
