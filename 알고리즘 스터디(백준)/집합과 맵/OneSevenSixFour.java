@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -14,7 +15,7 @@ public class OneSevenSixFour {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        List<String> notEar = new ArrayList<>();
+        HashSet<String> notEar = new HashSet<>();
         List<String> noEarSee = new ArrayList<>();
 
         for(int i = 0; i < N; i++){
