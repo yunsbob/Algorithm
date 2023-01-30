@@ -9,7 +9,6 @@ public class Priorityqueue {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
-
         PriorityQueue<Integer> Pqueue = new PriorityQueue<>(Collections.reverseOrder());
         for (int i = 0; i < N; i++) {
             int num = Integer.parseInt(br.readLine());
