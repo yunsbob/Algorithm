@@ -9,7 +9,6 @@ public class OneThreeEightNine {
 	static boolean[] visited;
 	static boolean[][] graph;
 	static Queue<Integer> queue = new LinkedList<>();
-	static Queue<Integer> qcnt = new LinkedList<>();
 	static int[] count;
 
 	public static void BFS(int node) {
