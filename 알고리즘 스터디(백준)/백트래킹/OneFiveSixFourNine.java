@@ -40,11 +40,6 @@ public class OneFiveSixFourNine {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		visited = new boolean[N+1];
-		int[] arr = new int[N+1];
-		
-		for(int i = 1; i <= N; i++) {
-			arr[i] = i;
-		}
 		
 		M = Integer.parseInt(st.nextToken());
 		result = new int[M];
