@@ -5,7 +5,6 @@ import java.util.StringTokenizer;
 
 public class OneFiveSixFiveZero {
 	static int[] result;
-	static boolean[] visited;
 	static int N, M;
 	static StringBuilder sb = new StringBuilder();
 	
@@ -26,12 +25,8 @@ public class OneFiveSixFiveZero {
 		}
 		
 		for(int i = node; i <= N; i++) {
-			if(!visited[i]) {
-				visited[i] = true;
-				result[cnt] = i;
-				DFS(i, cnt + 1);
-				visited[i] = false;
-			}
+			result[cnt] = i;
+			DFS(i + 1, cnt + 1);
 		}
 	}
 	
@@ -39,13 +34,6 @@ public class OneFiveSixFiveZero {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
-		visited = new boolean[N+1];
-		int[] arr = new int[N+1];
-		
-		for(int i = 1; i <= N; i++) {
-			arr[i] = i;
-		}
-		
 		M = Integer.parseInt(st.nextToken());
 		result = new int[M];
 		
