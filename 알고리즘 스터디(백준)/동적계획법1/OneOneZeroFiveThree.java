@@ -2,36 +2,36 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 public class OneOneZeroFiveThree {
-    static int[] dp, num;
-    static int N, result = 0;
+    static int[] dp, A;
     
-    public static int width(int index){
-        if(dp[index] != 0){
-            return dp[index];
-        }
-        for(int i = 0; i < index; i++){
-            if(num[i] < num[index]){
-                dp[index] = Math.max(dp[i], width(i));
+    public static int width(int index, int num){
+        if(index == 0){
+            if(A[index] < num){
+                return dp[index];
             }
+            return 0;
         }
-        if(result < dp[index]){
-            result = dp[index];
+        if(A[index] < num){
+            return Math.max(width(index-1, num), dp[index]);
         }
-        return dp[index];
+        return width(index-1, num);
     }
+    
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        N = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
         dp = new int[N];
-        num = new int[N];
-        dp[0] = 1;
+        A = new int[N];
+        int result = 0;
         StringTokenizer st = new StringTokenizer(br.readLine());
         for(int i = 0; i < N; i++){
-            num[i] = Integer.parseInt(st.nextToken());
-            width(i);
+            A[i] = Integer.parseInt(st.nextToken());
+            dp[i] = width(i, A[i]) + 1;
+            if(result < dp[i]){
+                result = dp[i];
+            }
         }
-        
         sb.append(result);
         System.out.println(sb);
     }
