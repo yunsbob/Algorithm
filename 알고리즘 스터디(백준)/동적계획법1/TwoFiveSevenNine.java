@@ -22,7 +22,6 @@ public class TwoFiveSevenNine {
                 dp[i] = Math.max(dp[i-2] , dp[i-3] + score[i-1]) + score[i];
             }
 		}
-		
 
         sb.append(dp[N-1]);
         System.out.println(sb);
