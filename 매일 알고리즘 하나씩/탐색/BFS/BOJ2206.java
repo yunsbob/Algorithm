@@ -1,18 +1,17 @@
+package everyday.BFS;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
-import java.io.IOException;
 
 public class BOJ2206 {
 	static int N, M;
-	static Queue<XY> move = new LinkedList<>();
-	static int[] dx = {1, 0, -1, 0};
-	static int[] dy = {0, 1, 0, -1};
+	static int[][] dr = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 	static int[][][] visited;
 	static boolean[][] map;
-	static XY now;
 	
 	private static class XY {
 		int x, y;
@@ -26,38 +25,38 @@ public class BOJ2206 {
 	}
 	
 	public static void bfs() {
-		int nX, nY;
-		boolean check;
+		Queue<XY> move = new ArrayDeque<>();
+		move.offer(new XY(0, 0, false));
+		
 		while(!move.isEmpty()) {
-			now = move.poll();
-			if(now.x == M && now.y == N) {
+			XY now = move.poll();
+			if(now.x == M - 1 && now.y == N - 1) {
+				System.out.println(visited[N - 1][M - 1][0] == 0 ? visited[N - 1][M - 1][1] : visited[N - 1][M - 1][0]);
 				return;
 			}
 			for(int i = 0; i < 4; i++) {
-				nX = now.x + dx[i];
-				nY = now.y + dy[i];
-				check = now.check;
-				if(nX < 1 || nY < 1 || nX > M || nY > N){
-					continue;
-				}
+				int nX = now.x + dr[i][0];
+				int nY = now.y + dr[i][1];
+				if(nX < 0 || nY < 0 || nX >= M || nY >= N) continue;
 				if(map[nY][nX]) {
-					if(!check) {
+					if(!now.check) {
 						move.offer(new XY(nX, nY, true));
 						visited[nY][nX][1] = visited[now.y][now.x][0] + 1;
 					}
 					continue;
 				}
-				if(!check && visited[nY][nX][0] == 0) {
+				if(!now.check && visited[nY][nX][0] == 0) {
 					visited[nY][nX][0] = visited[now.y][now.x][0] + 1;
 					visited[nY][nX][1] = visited[now.y][now.x][1] + 1;
-					move.offer(new XY(nX, nY, check));
+					move.offer(new XY(nX, nY, now.check));
 				}
-				else if(check && visited[nY][nX][1] == 0){
+				else if(now.check && visited[nY][nX][1] == 0){
 					visited[nY][nX][1] = visited[now.y][now.x][1] + 1;
-					move.offer(new XY(nX, nY, check));
+					move.offer(new XY(nX, nY, now.check));
 				}
 			}
 		}
+		System.out.println(-1);
 	}
 
 	public static void main(String[] args) throws IOException{
@@ -66,32 +65,19 @@ public class BOJ2206 {
 
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		visited = new int[N+1][M+1][2];
-		map = new boolean[N+1][M+1];
-		visited[1][1][0] = 1;
+		visited = new int[N][M][2];
+		map = new boolean[N][M];
+		visited[0][0][0] = visited[0][0][1] = 1;
 		
-		for(int i = 1; i <= N; i++) {
+		for(int i = 0; i < N; i++) {
 			String str = br.readLine();
-			for(int j = 1; j <= M; j++) {
-				if(str.charAt(j-1) == '1') {
+			for(int j = 0; j < M; j++) {
+				if(str.charAt(j) == '1') {
 					map[i][j] = true;
 				}
 			}
 		}
 		
-		move.offer(new XY(1, 1, false));
 		bfs();
-
-		if(now.x == M && now.y == N) {
-			if(visited[N][M][0] == 0) {
-				System.out.println(visited[N][M][1]);				
-			}
-			else {
-				System.out.println(visited[N][M][0]);
-			}
-		}
-		else {
-			System.out.println("-1");
-		}
 	}
 }
