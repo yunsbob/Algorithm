@@ -3,7 +3,7 @@ package everyday.dp;
 import java.io.*;
 import java.util.*;
 
-public class Knapsack {
+public class knapsack {
     static int[][] dp, travel;
     public static int knapsack(int n, int k){
 		if (n < 1)
