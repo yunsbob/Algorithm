@@ -12,7 +12,7 @@ public class BOJ2512 {
 
         int N = Integer.parseInt(br.readLine());
         int[] arr = new int[N];
-        int res = 0, min = 0, max = 0;
+        int min = 0, max = 0;
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
