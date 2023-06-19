@@ -1,4 +1,4 @@
-package everyday.dataStructure.segmentTree;
+package everyday.tree.segmentTree;
 
 public class segmentTree {
     static int[] arr, tree;

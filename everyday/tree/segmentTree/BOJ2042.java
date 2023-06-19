@@ -1,4 +1,4 @@
-package everyday.dataStructure.segmentTree;
+package everyday.tree.segmentTree;
 
 import java.io.BufferedReader;
 import java.io.IOException;
