@@ -1,13 +1,8 @@
 package everyday.twoPointer;
 
-import sun.nio.cs.ext.MacHebrew;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 public class BOJ16472 {
     public static void main(String[] args) throws IOException {
