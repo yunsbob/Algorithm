@@ -10,6 +10,7 @@ public class BOJ1486 {
     private static char[][] map;
     private static int[] height;
     private static int[][] distUp;
+    private static int[][] dr = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
     private static class XY {
         int x, y, cnt;
@@ -69,8 +70,6 @@ public class BOJ1486 {
     }
 
     private static void dijkstra(int sx, int sy, int[][] dist) {
-        int[][] dr = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
         PriorityQueue<XY> q = new PriorityQueue<>(((o1, o2) -> o1.cnt - o2.cnt));
         dist[sx][sy] = 0;
         q.offer(new XY(sx, sy, 0));
