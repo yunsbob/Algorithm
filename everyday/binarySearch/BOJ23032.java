@@ -1,4 +1,4 @@
-package everyday.twoPointer;
+package everyday.binarySearch;
 
 import java.io.BufferedReader;
 import java.io.IOException;
