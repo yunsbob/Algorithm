@@ -26,10 +26,13 @@ public class BOJ23032 {
                 int left = i, right = j;
                 while (left < right) {
                     int mid = (left + right) / 2;
-                    if (prefix[mid] - prefix[i - 1] >= sum / 2) right = mid;
+                    if (prefix[mid] - prefix[i - 1] > sum / 2) right = mid - 1;
+                    else if(prefix[mid] == sum / 2) {
+                        left = mid;
+                        break;
+                    }
                     else left = mid + 1;
                 }
-
                 if (left < j) {
                     int n = prefix[left] - prefix[i - 1];
                     int m = prefix[j] - prefix[left];
@@ -57,5 +60,4 @@ public class BOJ23032 {
 
         System.out.println(res);
     }
-
 }
