@@ -17,19 +17,7 @@ public class BOJ11048 {
 		for (int i = 1; i <= N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 1; j <= M; j++) {
-				dp[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
-
-		for (int i = 1; i <= N; i++) {
-			for (int j = 1; j <= M; j++) {
-				int a = dp[i - 1][j];
-				int b = dp[i][j - 1];
-				int c = dp[i - 1][j - 1];
-
-				if (a >= b && a >= c) dp[i][j] += dp[i - 1][j];
-				else if (b >= a && b >= c) dp[i][j] += dp[i][j - 1];
-				else dp[i][j] += dp[i - 1][j - 1];
+				dp[i][j] = Math.max(dp[i - 1][j], Math.max(dp[i][j - 1], dp[i - 1][j])) + Integer.parseInt(st.nextToken());
 			}
 		}
 
