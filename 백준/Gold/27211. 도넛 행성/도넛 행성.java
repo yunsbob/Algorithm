@@ -8,7 +8,6 @@ import java.util.StringTokenizer;
 public class Main {
 	private static int N, M;
 	private static int[][] map;
-	private static boolean[][] visited;
 	private static int[][] dir = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
 	private static class XY {
@@ -26,7 +25,6 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		map = new int[N][M];
-		visited = new boolean[N][M];
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < M; j++) {
@@ -37,7 +35,7 @@ public class Main {
 		int res = 0;
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
-				if (map[i][j] == 0 && !visited[i][j]) {
+				if (map[i][j] == 0) {
 					res++;
 					bfs(i, j);
 				}
@@ -49,23 +47,17 @@ public class Main {
 
 	private static void bfs(int x, int y) {
 		Queue<XY> q = new ArrayDeque<>();
-		visited[x][y] = true;
+		map[x][y] = 1;
 
 		q.offer(new XY(x, y));
 		while (!q.isEmpty()) {
 			XY now = q.poll();
 			for (int i = 0; i < 4; i++) {
-				int nx = now.x + dir[i][0];
-				int ny = now.y + dir[i][1];
+				int nx = (now.x + dir[i][0] + N) % N;
+				int ny = (now.y + dir[i][1] + M) % M;
 
-				if (nx == -1) nx = N - 1;
-				else if (nx == N) nx = 0;
-
-				if (ny == -1) ny = M - 1;
-				else if (ny == M) ny = 0;
-
-				if (map[nx][ny] == 1 || visited[nx][ny]) continue;
-				visited[nx][ny] = true;
+				if (map[nx][ny] == 1) continue;
+				map[nx][ny] = 1;
 				q.offer(new XY(nx, ny));
 			}
 		}
