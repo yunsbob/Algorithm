@@ -44,14 +44,13 @@ public class Main {
 	}
 
 	private static void dfs(int now) {
-		idx++;
-		if (idx == N || visited[now] || !flag) return;
+		if (visited[now]) return;
 		visited[now] = true;
+		idx++;
 
 		Set<Integer> hs = new HashSet<>();
 		for (int next : list.get(now)) {
-			if (visited[next]) continue;
-			hs.add(next);
+			if (!visited[next]) hs.add(next);
 		}
 
 		if (hs.size() == 0) return;
