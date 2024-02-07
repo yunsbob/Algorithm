@@ -20,8 +20,9 @@ public class Main {
 		Arrays.sort(arr);
 		int res = 0;
 		for (int i = 0; i < N; i++) {
-			int s = 0, e = N - 1;
+			int s = 0, e = N - 1, num = arr[i];
 			while (s < e) {
+				int sum = arr[s] + arr[e];
 				if (s == i) {
 					s++;
 					continue;
@@ -30,9 +31,9 @@ public class Main {
 					continue;
 				}
 
-				if (arr[s] + arr[e] < arr[i]) {
+				if (sum < num) {
 					s++;
-				} else if (arr[s] + arr[e] > arr[i]) {
+				} else if (sum > num) {
 					e--;
 				} else {
 					res++;
