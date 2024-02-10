@@ -8,9 +8,7 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-	private static int N, res = 1;
-	private static boolean[][] map;
-	private static boolean[][] flag;
+	private static int N;
 	private static int[][] dir = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 	private static List<List<List<XY>>> switches = new ArrayList<>();
 
@@ -27,8 +25,6 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
 		N = Integer.parseInt(st.nextToken());
-		map = new boolean[N + 1][N + 1];
-		flag = new boolean[N + 1][N + 1];
 		switches.add(new ArrayList<>());
 		for (int i = 1; i <= N; i++) {
 			switches.add(new ArrayList<>());
@@ -47,15 +43,16 @@ public class Main {
 			switches.get(x).get(y).add(new XY(x2, y2));
 		}
 
-		map[1][1] = true;
-		bfs();
-		System.out.println(res);
+		System.out.println(bfs());
 	}
 
-	private static void bfs() {
-		boolean r = false; // 탐색을 더 할지 여부
+	private static int bfs() {
+		int res = 1;
 		boolean[][] visited = new boolean[N + 1][N + 1];
+		boolean[][] map = new boolean[N + 1][N + 1];
+		boolean[][] flag = new boolean[N + 1][N + 1];
 		visited[1][1] = true;
+		map[1][1] = true;
 		Queue<XY> q = new ArrayDeque<>();
 		q.offer(new XY(1, 1));
 
@@ -64,9 +61,17 @@ public class Main {
 			if (!flag[now.x][now.y]) { // 해당 방에서 스위치를 킨적이 없으면
 				for (XY next : switches.get(now.x).get(now.y)) { // 해당 방에 존재하는 모든 스위치를 탐색
 					if (!map[next.x][next.y]) { // 불이 꺼져있는 방이면 스위치를 켬
-						r = true;
 						res++;
 						map[next.x][next.y] = true;
+
+						for (int i = 0; i < 4; i++) { // 불이 켜진 방 주위를 방문한적 있으면 큐에 추가
+							int nx = next.x + dir[i][0];
+							int ny = next.y + dir[i][1];
+							if (nx <= 0 || ny <= 0 || nx > N || ny > N || !visited[nx][ny]) continue;
+							visited[next.x][next.y] = true;
+							q.offer(new XY(next.x, next.y));
+							break;
+						}
 					}
 				}
 
@@ -82,6 +87,6 @@ public class Main {
 			}
 		}
 
-		if (r) bfs();
+		return res;
 	}
 }
