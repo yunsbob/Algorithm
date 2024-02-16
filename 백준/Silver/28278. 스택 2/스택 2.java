@@ -16,18 +16,18 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 
-			int order = Integer.parseInt(st.nextToken());
-			if (order == 1) {
+			char order = st.nextToken().charAt(0);
+			if (order == '1') {
 				stack.addLast(Integer.parseInt(st.nextToken()));
-			} else if (order == 2) {
+			} else if (order == '2') {
 				if (stack.isEmpty()) {
 					sb.append("-1\n");
 				} else {
 					sb.append(stack.pollLast()).append('\n');
 				}
-			} else if (order == 3) {
+			} else if (order == '3') {
 				sb.append(stack.size()).append('\n');
-			} else if (order == 4) {
+			} else if (order == '4') {
 				if (stack.isEmpty()) {
 					sb.append("1\n");
 				} else {
