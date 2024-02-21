@@ -8,8 +8,9 @@ fun main() {
 
     val str = br.readLine()
     val list = ArrayList<String>()
+    val last = str.length
     str.indices.forEach {
-        list.add(str.substring(it, str.length))
+        list.add(str.substring(it, last))
     }
 
     list.sort()
