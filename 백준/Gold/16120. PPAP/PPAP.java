@@ -12,7 +12,7 @@ public class Main {
 		for (int i = 0; i < str.length(); i++) {
 			char now = str.charAt(i);
 			if (now == 'P') p++;
-			else if (now == 'A' && p >= 2 && i < str.length() -1 && str.charAt(i + 1) == 'P') {
+			else if (p >= 2 && i < str.length() -1 && str.charAt(i + 1) == 'P') {
 				p--;
 				i++;
 			} else {
