@@ -19,7 +19,7 @@ public class Main {
 		}
 		Arrays.sort(arr);
 
-		int min = 1, max = arr[N - 1];
+		int min = 1, max = arr[N - 1] - arr[0];
 		while (min <= max) {
 			int mid = (min + max) / 2;
 
