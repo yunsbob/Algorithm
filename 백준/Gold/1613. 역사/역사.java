@@ -48,6 +48,8 @@ public class Main {
 	private static void floyd() {
 		for (int k = 1; k <= n; k++) {
 			for (int i = 1; i <= n; i++) {
+				if (!arr[i][k]) continue;
+				
 				for (int j = 1; j <= n; j++) {
 					if (arr[i][k] && arr[k][j])
 						arr[i][j] = true;
