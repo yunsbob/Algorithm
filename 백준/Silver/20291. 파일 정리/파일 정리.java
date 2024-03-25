@@ -21,8 +21,8 @@ public class Main {
 			treeMap.put(extension, treeMap.getOrDefault(extension, 0) + 1);
 		}
 
-		for (String extension : treeMap.keySet()) {
-			sb.append(extension).append(' ').append(treeMap.get(extension)).append('\n');
+		for (Map.Entry<String, Integer> extension : treeMap.entrySet()) {
+			sb.append(extension.getKey()).append(' ').append(extension.getValue()).append('\n');
 		}
 
 		System.out.println(sb);
