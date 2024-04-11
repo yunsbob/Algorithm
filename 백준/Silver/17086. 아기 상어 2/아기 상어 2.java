@@ -7,16 +7,16 @@ import java.util.StringTokenizer;
 
 public class Main {
 	private static int N, M;
-	private static boolean[][] map;
+	private static int[][] map;
 	private static int[][] dxy = {{-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}};
+	private static Queue<XY> q = new ArrayDeque<>();
 
 	private static class XY {
-		int x, y, cnt;
+		int x, y;
 
-		public XY(int x, int y, int cnt) {
+		public XY(int x, int y) {
 			this.x = x;
 			this.y = y;
-			this.cnt = cnt;
 		}
 	}
 
@@ -26,54 +26,39 @@ public class Main {
 
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		map = new boolean[N][M];
+		map = new int[N][M];
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 
 			for (int j = 0; j < M; j++) {
-				if (st.nextToken().equals("1"))
-					map[i][j] = true;
-			}
-		}
-
-		int res = 0;
-		int[][] v = new int[N][M];
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				if (!map[i][j]) {
-					res = Math.max(res, bfs(i, j));
-					v[i][j] = bfs(i, j);
+				map[i][j] = Integer.parseInt(st.nextToken());
+				if (map[i][j] == 1) {
+					q.offer(new XY(i, j));
 				}
 			}
 		}
 
-		System.out.println(res);
+		System.out.println(bfs());
 	}
 
-	private static int bfs(int sx, int sy) {
-		Queue<XY> q = new ArrayDeque<>();
-		boolean[][] check = new boolean[N][M];
-		q.offer(new XY(sx, sy, 0));
-		check[sx][sy] = true;
+	private static int bfs() {
+		int res = 1;
 
 		while (!q.isEmpty()) {
 			XY now = q.poll();
-			int cnt = now.cnt + 1;
 
 			for (int i = 0; i < 8; i++) {
 				int nx = now.x + dxy[i][0];
 				int ny = now.y + dxy[i][1];
-				if (nx < 0 || ny < 0 || nx >= N || ny >= M || check[nx][ny])
+				if (nx < 0 || ny < 0 || nx >= N || ny >= M || map[nx][ny] != 0)
 					continue;
 
-				if (map[nx][ny])
-					return cnt;
-
-				check[nx][ny] = true;
-				q.offer(new XY(nx, ny, cnt));
+				map[nx][ny] = map[now.x][now.y] + 1;
+				q.offer(new XY(nx, ny));
+				res = Math.max(res, map[nx][ny]);
 			}
 		}
 
-		return -1;
+		return res - 1;
 	}
 }
