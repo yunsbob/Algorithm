@@ -1,16 +1,14 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
 	private static int rCnt = 3, cCnt = 3;
 	private static int[][] arr = new int[100][100];
+	private static int[] cnt;
 	private static PriorityQueue<Num> pq;
-	private static Map<Integer, Integer> hm;
 
 	private static class Num implements Comparable<Num> {
 		int num, cnt;
@@ -63,7 +61,7 @@ public class Main {
 
 			for (int i = 0; i < rCnt; i++) {
 				pq = new PriorityQueue<>();
-				hm = new HashMap<>();
+				cnt = new int[101];
 				R(i);
 			}
 		} else {
@@ -71,21 +69,28 @@ public class Main {
 
 			for (int i = 0; i < cCnt; i++) {
 				pq = new PriorityQueue<>();
-				hm = new HashMap<>();
+				cnt = new int[101];
 				C(i);
 			}
 		}
 	}
 
 	private static void R(int r) {
+		int max = 0;
 		for (int j = 0; j < 100; j++) {
 			if (arr[r][j] == 0)
 				continue;
 
-			hm.put(arr[r][j], hm.getOrDefault(arr[r][j], 0) + 1);
+			cnt[arr[r][j]]++;
+			max = Math.max(max, arr[r][j]);
 		}
 
-		hm.forEach((num, cnt) -> pq.offer(new Num(num, cnt)));
+		for (int i = 1; i <= max; i++) {
+			if (cnt[i] == 0)
+				continue;
+
+			pq.offer(new Num(i, cnt[i]));
+		}
 
 		int idx = 0;
 		while (!pq.isEmpty()) {
@@ -103,14 +108,21 @@ public class Main {
 	}
 
 	private static void C(int c) {
+		int max = 0;
 		for (int j = 0; j < 100; j++) {
 			if (arr[j][c] == 0)
 				continue;
 
-			hm.put(arr[j][c], hm.getOrDefault(arr[j][c], 0) + 1);
+			cnt[arr[j][c]]++;
+			max = Math.max(max, arr[j][c]);
 		}
 
-		hm.forEach((num, cnt) -> pq.offer(new Num(num, cnt)));
+		for (int i = 1; i <= max; i++) {
+			if (cnt[i] == 0)
+				continue;
+
+			pq.offer(new Num(i, cnt[i]));
+		}
 
 		int idx = 0;
 		while (!pq.isEmpty()) {
