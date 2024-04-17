@@ -9,8 +9,8 @@ import java.util.StringTokenizer;
 public class Main {
 	private static int rCnt = 3, cCnt = 3;
 	private static int[][] arr = new int[100][100];
-	private static PriorityQueue<Num> pq = new PriorityQueue<>();
-	private static Map<Integer, Integer> hm = new HashMap<>();
+	private static PriorityQueue<Num> pq;
+	private static Map<Integer, Integer> hm;
 
 	private static class Num implements Comparable<Num> {
 		int num, cnt;
@@ -58,83 +58,72 @@ public class Main {
 	}
 
 	private static void sort() {
-		if (rCnt >= cCnt)
-			R();
-		else
-			C();
+		if (rCnt >= cCnt) {
+			cCnt = 0;
+
+			for (int i = 0; i < rCnt; i++) {
+				pq = new PriorityQueue<>();
+				hm = new HashMap<>();
+				R(i);
+			}
+		} else {
+			rCnt = 0;
+
+			for (int i = 0; i < cCnt; i++) {
+				pq = new PriorityQueue<>();
+				hm = new HashMap<>();
+				C(i);
+			}
+		}
 	}
 
-	private static void R() {
-		int maxC = 0;
+	private static void R(int r) {
+		for (int j = 0; j < 100; j++) {
+			if (arr[r][j] == 0)
+				continue;
 
-		for (int i = 0; i < rCnt; i++) {
-			for (int j = 0; j < 100; j++) {
-				if (arr[i][j] == 0)
-					continue;
-
-				hm.put(arr[i][j], hm.getOrDefault(arr[i][j], 0) + 1);
-			}
-
-			hm.forEach((num, cnt) -> pq.offer(new Num(num, cnt)));
-
-			int idx = 0;
-			while (!pq.isEmpty()) {
-				Num now = pq.poll();
-
-				arr[i][idx++] = now.num;
-				arr[i][idx++] = now.cnt;
-
-				if (idx == 100) {
-					pq.clear();
-					break;
-				}
-			}
-
-			for (int j = idx; j < 100; j++) {
-				arr[i][j] = 0;
-			}
-
-			maxC = Math.max(maxC, idx);
-			hm.clear();
+			hm.put(arr[r][j], hm.getOrDefault(arr[r][j], 0) + 1);
 		}
 
-		cCnt = maxC;
+		hm.forEach((num, cnt) -> pq.offer(new Num(num, cnt)));
+
+		int idx = 0;
+		while (!pq.isEmpty()) {
+			Num now = pq.poll();
+
+			arr[r][idx++] = now.num;
+			arr[r][idx++] = now.cnt;
+		}
+
+		for (int j = idx; j < 100; j++) {
+			arr[r][j] = 0;
+		}
+
+		cCnt = Math.max(cCnt, idx);
 	}
 
-	private static void C() {
-		int maxR = 0;
+	private static void C(int c) {
+		for (int j = 0; j < 100; j++) {
+			if (arr[j][c] == 0)
+				continue;
 
-		for (int i = 0; i < cCnt; i++) {
-			for (int j = 0; j < 100; j++) {
-				if (arr[j][i] == 0)
-					continue;
-
-				hm.put(arr[j][i], hm.getOrDefault(arr[j][i], 0) + 1);
-			}
-
-			hm.forEach((num, cnt) -> pq.offer(new Num(num, cnt)));
-
-			int idx = 0;
-			while (!pq.isEmpty()) {
-				Num now = pq.poll();
-
-				arr[idx++][i] = now.num;
-				arr[idx++][i] = now.cnt;
-
-				if (idx == 100) {
-					pq.clear();
-					break;
-				}
-			}
-
-			for (int j = idx; j < 100; j++) {
-				arr[j][i] = 0;
-			}
-
-			maxR = Math.max(maxR, idx);
-			hm.clear();
+			hm.put(arr[j][c], hm.getOrDefault(arr[j][c], 0) + 1);
 		}
 
-		rCnt = maxR;
+		hm.forEach((num, cnt) -> pq.offer(new Num(num, cnt)));
+
+		int idx = 0;
+		while (!pq.isEmpty()) {
+			Num now = pq.poll();
+
+			arr[idx++][c] = now.num;
+			arr[idx++][c] = now.cnt;
+		}
+
+		for (int j = idx; j < 100; j++) {
+			arr[j][c] = 0;
+		}
+
+		rCnt = Math.max(rCnt, idx);
 	}
 }
