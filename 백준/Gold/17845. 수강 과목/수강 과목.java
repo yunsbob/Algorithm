@@ -23,10 +23,7 @@ public class Main {
 			int I = study[i][0];
 			int T = study[i][1];
 
-			for (int j = N; j >= 0; j--) {
-				if (T > j)
-					break;
-
+			for (int j = N; j >= T; j--) {
 				dp[j] = Math.max(dp[j], dp[j - T] + I);
 			}
 		}
