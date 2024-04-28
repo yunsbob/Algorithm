@@ -20,11 +20,7 @@ public class Main {
 				break;
 
 			int res = V / P * L;
-			if (V % P > L) {
-				res += L;
-			} else {
-				res += V % P;
-			}
+			res += Math.min(V % P, L);
 
 			sb.append("Case ").append(t++).append(": ").append(res).append('\n');
 		}
