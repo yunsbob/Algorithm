@@ -1,26 +1,26 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 
 public class Main {
 	private static int N;
-	private static List<List<Node>> list = new ArrayList<>();
+	private static int[] parents;
+	private static PriorityQueue<Edge> pq = new PriorityQueue<>();
 
-	private static class Node implements Comparable<Node> {
-		int num, cost;
+	private static class Edge implements Comparable<Edge> {
+		int a, b, cost;
 
-		public Node(int num, int cost) {
-			this.num = num;
+		public Edge(int a, int b, int cost) {
+			this.a = a;
+			this.b = b;
 			this.cost = cost;
 		}
 
 		@Override
-		public int compareTo(Node o) {
+		public int compareTo(Edge o) {
 			return o.cost - this.cost;
 		}
 	}
@@ -36,47 +36,58 @@ public class Main {
 		int s = Integer.parseInt(st.nextToken());
 		int e = Integer.parseInt(st.nextToken());
 
-		for (int i = 0; i <= N; i++) {
-			list.add(new ArrayList<>());
-		}
-
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
 			int cost = Integer.parseInt(st.nextToken());
 
-			list.get(a).add(new Node(b, cost));
-			list.get(b).add(new Node(a, cost));
+			pq.offer(new Edge(a, b, cost));
 		}
 
-		System.out.println(prim(s, e));
+		System.out.println(kruskal(s, e));
 	}
 
-	private static long prim(int s, int e) {
+	private static void makeSet() {
+		parents = new int[N + 1];
+
+		for (int i = 1; i <= N; i++) {
+			parents[i] = i;
+		}
+	}
+
+	private static int find(int x) {
+		if (parents[x] == x)
+			return x;
+
+		return parents[x] = find(parents[x]);
+	}
+
+	private static boolean union(int a, int b) {
+		int parentA = find(a);
+		int parentB = find(b);
+
+		if (parentA == parentB)
+			return false;
+
+		parents[parentA] = parentB;
+		return true;
+	}
+
+	private static long kruskal(int s, int e) {
 		int res = 1_000_000;
-		boolean[] visited = new boolean[N + 1];
-		PriorityQueue<Node> pq = new PriorityQueue<>();
-		pq.offer(new Node(s, 1_000_000));
+
+		makeSet();
 
 		while (!pq.isEmpty()) {
-			Node now = pq.poll();
+			Edge now = pq.poll();
 
-			if (visited[now.num])
-				continue;
+			if (union(now.a, now.b)) {
+				res = now.cost;
 
-			res = Math.min(res, now.cost);
-
-			if (now.num == e)
-				return res;
-
-			visited[now.num] = true;
-
-			for (Node next : list.get(now.num)) {
-				if (visited[next.num])
-					continue;
-
-				pq.offer(next);
+				if (find(s) == find(e)) {
+					return res;
+				}
 			}
 		}
 
