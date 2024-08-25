@@ -28,7 +28,7 @@ public class Main {
 			Arrays.sort(w);
 
 			int s = 0, e = N - 1;
-			while (s < e) {
+			A: while (s < e) {
 				int now = w[s] + w[e];
 
 				if (now > C) {
@@ -37,13 +37,16 @@ public class Main {
 					res = 1;
 					break;
 				} else {
-					for (int i = s + 1; i < e; i++) {
-						if (now + w[i] > C) {
-							s++;
-							break;
-						} else if (now + w[i] == C) {
+					int l = s + 1, r = e - 1, k = C - now;
+					while (l <= r) {
+						int mid = (l + r) / 2;
+						if (w[mid] == k) {
 							res = 1;
-							break;
+							break A;
+						} else if (w[mid] < k) {
+							l = mid + 1;
+						} else {
+							r = mid - 1;
 						}
 					}
 
