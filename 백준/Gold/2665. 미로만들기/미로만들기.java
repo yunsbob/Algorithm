@@ -9,7 +9,7 @@ public class Main {
 	private static int n;
 	private static boolean[][] map;
 	private static int[][] cnt;
-	private static int[][] dr = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+	private static int[][] dxy = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
 	private static class XY {
 		int x, y;
@@ -47,15 +47,18 @@ public class Main {
 			XY now = q.poll();
 
 			for (int i = 0; i < 4; i++) {
-				int nx = now.x + dr[i][0];
-				int ny = now.y + dr[i][1];
+				int nx = now.x + dxy[i][0];
+				int ny = now.y + dxy[i][1];
 
-				if (nx < 0 || ny < 0 || nx >= n || ny >= n || cnt[now.x][now.y] >= cnt[nx][ny]) continue;
+				if (nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
 
-				if (map[nx][ny]) cnt[nx][ny] = cnt[now.x][now.y] + 1;
-				else cnt[nx][ny] = cnt[now.x][now.y];
-
-				q.offer(new XY(nx, ny));
+				if (map[nx][ny] && cnt[now.x][now.y] + 1 < cnt[nx][ny]) {
+					cnt[nx][ny] = cnt[now.x][now.y] + 1;
+					q.offer(new XY(nx, ny));
+				} else if (!map[nx][ny] && cnt[now.x][now.y] < cnt[nx][ny]) {
+					cnt[nx][ny] = cnt[now.x][now.y];
+					q.offer(new XY(nx, ny));
+				}
 			}
 		}
 
